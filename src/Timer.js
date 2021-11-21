@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './Timer.css';
 
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
@@ -7,10 +8,14 @@ function Timer(props) {
     const [timer, setTimer] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
+    const [lastTimer, setLastTimer] = useState(0);
 
     useEffect(() => {
         console.log(`new timeSec=${props.timeSec}`)
-        setTimer(props.timeSec);
+        if(lastTimer != props.timeSec) {
+            setLastTimer(props.timeSec);
+            setTimer(props.timeSec);
+        }
         const intervalId = setInterval(() =>
             setTimer(timer => {
                 setSeconds(timer % 60);
@@ -25,7 +30,7 @@ function Timer(props) {
 
     return (
         <div>
-            <span>{zeroPad(minutes, 2)}:{zeroPad(seconds, 2)}</span>
+            <p className="timer-digit">{zeroPad(minutes, 2)}:{zeroPad(seconds, 2)}</p>
         </div>
     )
 }

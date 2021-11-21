@@ -15,16 +15,23 @@ function App() {
 
   const [timerName, setTimerName] = useState('pomodoro')
   const [timer, setTimer] = useState(timers['pomodoro'])
-
+  const [stop, setStop] = useState(true);
+  const [lastStep, setLastStep] = useState(0);
 
 
   useEffect(() => {
     console.log('timer change!')
     const step = 100 / timer;
-    setProgresss(0);
+    if(lastStep != step) {
+      setProgresss(0);
+      setLastStep(step);
+    }
     const interval = setInterval(() => setProgresss((state) => Math.min(state + step, 100)), 1000)
+    if(stop) {
+      clearInterval(interval);
+    }
     return () => clearInterval(interval);
-  }, [timer]);
+  }, [timer, stop]);
 
 
   const changeTimer = (index) => () => {
@@ -44,7 +51,8 @@ function App() {
       <div className="progress">
         <CircleProgress stroke={10} radius={170} progress={progress}></CircleProgress>
         <div className="timer">
-          <Timer timeSec={timer}></Timer>
+          <Timer timeSec={timer} stop={stop}></Timer>
+          <button className="btn-stop" onClick={() => setStop(s => !s)}>{stop ? "Start" : "Stop"}</button>
         </div>
       </div>
       <div></div>
