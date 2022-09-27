@@ -5,16 +5,18 @@ const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 
 function Timer(props) {
+    // eslint-disable-next-line
     const [timer, setTimer] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [lastTimer, setLastTimer] = useState(0);
 
     useEffect(() => {
-        console.log(`new timeSec=${props.timeSec}`)
-        if(lastTimer != props.timeSec) {
+        if (lastTimer !== props.timeSec) {
             setLastTimer(props.timeSec);
             setTimer(props.timeSec);
+            setSeconds(props.timeSec % 60);
+            setMinutes(Math.floor(props.timeSec / 60));
         }
         const intervalId = setInterval(() =>
             setTimer(timer => {
@@ -26,7 +28,7 @@ function Timer(props) {
             clearInterval(intervalId);
         }
         return () => clearInterval(intervalId);
-    }, [props.timeSec, props.stop])
+    }, [props.timeSec, props.stop, lastTimer])
 
     return (
         <div>

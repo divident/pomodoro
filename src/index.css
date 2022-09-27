@@ -4,6 +4,11 @@
   --bg-active: #f87074; 
   --text-primary: #f87074;
   --text-secondary: #dfe6ff;
+  --bg-grey: #eef1f8;
+  --bg-red: #f26d66;
+  --bg-pink: #db7ffb;
+  --bg-aqua: #6df4fa;
+
 }
 body {
   background-color: var(--bg-primary);
