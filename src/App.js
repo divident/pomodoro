@@ -54,10 +54,11 @@ function App() {
       short: tmpTimers.short * 60,
       long: tmpTimers.long * 60,
     });
+    setTimer(tmpTimers[timerName] * 60);
   }
 
   const onTimeChange = (timer) => (ev) => {
-    setTmpTimers(s => ({ ...s, [timer]: ev.target.value }))
+    setTmpTimers(s => ({ ...s, [timer]: ev.target.value }));
   }
 
   const onFontChange = (font) => (ev) => {
